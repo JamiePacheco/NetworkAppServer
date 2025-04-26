@@ -1,0 +1,12 @@
+spring:
+  application:
+    name : network application
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      password: password
+      username: neo4j
+  config:
+    activate:
+      on-profile: local
+
