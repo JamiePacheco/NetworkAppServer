@@ -108,6 +108,30 @@ public class PersonController {
         return response;
     }
 
+    @PostMapping("/generate-group-memberships")
+    public ResponseEntity<Response<String>> generateGroupMemberships(@RequestParam("min") int min, @RequestParam("max") int max) {
+        ResponseEntity<Response<String>> response;
+        try {
+            personService.generateGroupMemberships(min, max);
+            response = ResponseEntity.ok(
+                    Response.<String>builder()
+                            .message("Successfully generated mock memberships")
+                            .status(HttpStatus.ACCEPTED)
+                            .responseContent("Yippie")
+                            .build()
+            );
+        } catch (Exception e) {
+            response = ResponseEntity.badRequest().body(
+                    Response.<String>builder()
+                            .message("Failure to generate memberships")
+                            .status(HttpStatus.BAD_REQUEST)
+                            .responseContent(e.getMessage())
+                            .build()
+            );
+        }
+        return response;
+    }
+
     @DeleteMapping("/all")
     public ResponseEntity<String> deleteAllPeople() {
         ResponseEntity<String> response;

@@ -1,7 +1,9 @@
 package com.app.network.networkapplication.service;
 
 
+import com.app.network.networkapplication.model.Group;
 import com.app.network.networkapplication.model.Person;
+import com.app.network.networkapplication.repository.GroupRepository;
 import com.app.network.networkapplication.repository.PersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +18,10 @@ import java.util.Random;
 public class PersonService {
 
     PersonRepository personRepository;
-
-    public PersonService(PersonRepository personRepository) {
+    GroupRepository groupRepository;
+    public PersonService(PersonRepository personRepository, GroupRepository groupRepository) {
         this.personRepository = personRepository;
+        this.groupRepository = groupRepository;
     }
 
     private final Logger log = LoggerFactory.getLogger(PersonService.class);
@@ -84,6 +87,26 @@ public class PersonService {
             pageNum++;
         } while (pageNum < page.getTotalPages());
         return personRepository.findAll();
+    }
+
+    public void generateGroupMemberships(int min, int max) {
+        Random rand = new Random();
+        int pageNum = 0;
+        Page<Person> page = null;
+        List<Group> groups = groupRepository.findAll();
+        do {
+            PageRequest pageable = PageRequest.of(pageNum, 100);
+            page = personRepository.findAll(pageable);
+
+            int memberships;
+            for (Person person : page.get().toList()) {
+                memberships = rand.nextInt(min, Math.min(groups.size(), max));
+                List<Group> randomGroups = groupRepository.findRandomGroups(memberships);
+                person.memberOf(randomGroups);
+                personRepository.save(person);
+            }
+            pageNum++;
+        } while (pageNum  < page.getTotalPages());
     }
 
     public void deletePeople() {

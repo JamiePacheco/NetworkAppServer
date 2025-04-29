@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-@Node("Person")
+@Node(primaryLabel = "Person")
 @AllArgsConstructor
 public class Person {
 
@@ -19,10 +19,17 @@ public class Person {
     @GeneratedValue
     private Long id;
 
+    @Property(name = "name")
     private String name;
+
+    @Property(name = "username")
+    private String username;
 
     @Relationship(type = "FRIENDS", direction = Relationship.Direction.OUTGOING)
     public Set<Person> friends;
+
+    @Relationship(type = "MEMBER_OF", direction = Relationship.Direction.OUTGOING)
+    public Set<Group> groups;
 
     public void friendsWith(Person person) {
         if (friends == null) {
@@ -35,6 +42,19 @@ public class Person {
     public void friendsWith(List<Person> people) {
         for (Person person : people) {
             this.friendsWith(person);
+        }
+    }
+
+    public void memberOf(Group group) {
+        if (group == null) {
+            groups = new HashSet<>();
+        }
+        groups.add(group);
+    }
+
+    public void memberOf(List<Group> groups) {
+        for (Group group : groups) {
+            this.memberOf(group);
         }
     }
 
@@ -54,9 +74,5 @@ public class Person {
 
     // required by Neo4j API for some reason...
     private Person() {}
-
-
-
-
 
 }

@@ -25,4 +25,5 @@ public class PersonRepositoryCustomImpl implements PersonRepositoryCustom {
 
         return this.neo4jTemplate.findAll(query, Person.class);
     }
+
 }
