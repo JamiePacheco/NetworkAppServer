@@ -18,6 +18,6 @@
       - If you do not have make installed simply copy the command from the Makefile file
 
 ## Project Usage
-- Now this project supports basic CRUD functionality by utilizing basic REST api endpoints.
+- This project supports basic CRUD functionality by utilizing basic REST api endpoints.
 - These endpoints can be called directly or by using the swagger ui found [here](http://localhost:8080/swagger-ui/index.html) when running app
 - By nature of neo4j docker server data does not persist when server is stopped so mock data can be generated, as well as mock relations.
