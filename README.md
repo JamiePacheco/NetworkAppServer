@@ -18,7 +18,7 @@
   - Now to set up Neo4j server we leverage docker to handle the configuration for us.
     - Make sure docker client is installed
       - https://docs.docker.com/desktop/setup/install/windows-install/
-    - Make sure to login to docker otherwise build will fail
+    - Make sure to login to docker otherwise docker command will fail
     - Next within the base project directory `../networkapplication` run the make command `make neo4j-server` in terminal
       - If you do not have make installed simply copy the command from the Makefile file and run it
       - User will be `neo4j`
@@ -28,3 +28,5 @@
 - This project supports basic CRUD functionality by utilizing basic REST api endpoints.
 - These endpoints can be called directly or by using the swagger ui found [here](http://localhost:8080/swagger-ui/index.html) when running app
 - By nature of neo4j docker server data does not persist when server is stopped so mock data can be generated, as well as mock relations.
+  - However, if you wish for data to persist run the `neo4j-server-persist` make command or copy the command listed within the Makefile
+- When using the endpoints there are two files defined within resources for mock data if you wish to use them (one for groups, one for person)

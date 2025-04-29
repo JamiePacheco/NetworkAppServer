@@ -3,7 +3,7 @@ neo4j-server:
 
 # run neo4j:
 neo4j-server-persist:
-	mkdir ./src/main/resources/data \
+	mkdir ./src/main/resources/data -p
 	docker run --restart always \
 		--publish=7474:7474 \
 		--publish=7687:7687 \
